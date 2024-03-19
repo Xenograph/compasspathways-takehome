@@ -48,7 +48,19 @@ export type Customer = {
 
 export type Query = {
   __typename?: 'Query';
+  account?: Maybe<Account>;
+  customer?: Maybe<Customer>;
   customers: Array<Customer>;
+};
+
+
+export type QueryAccountArgs = {
+  accountId: Scalars['Int']['input'];
+};
+
+
+export type QueryCustomerArgs = {
+  username: Scalars['String']['input'];
 };
 
 
@@ -250,6 +262,8 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type QueryResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  account?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, RequireFields<QueryAccountArgs, 'accountId'>>;
+  customer?: Resolver<Maybe<ResolversTypes['Customer']>, ParentType, ContextType, RequireFields<QueryCustomerArgs, 'username'>>;
   customers?: Resolver<Array<ResolversTypes['Customer']>, ParentType, ContextType, RequireFields<QueryCustomersArgs, 'page' | 'pageSize'>>;
 };
 

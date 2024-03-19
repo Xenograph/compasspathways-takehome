@@ -41,5 +41,7 @@ export const typeDefs = gql`
 
   type Query {
     customers(page: Int!, pageSize: Int!): [Customer!]!
+    customer(username: String!): Customer
+    account(accountId: Int!): Account
   }
 `;

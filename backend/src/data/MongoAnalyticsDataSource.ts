@@ -65,6 +65,14 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
         },
       ])
       .toArray();
+    // TODO: handle empty array
     return docs[0].transactions;
+  }
+
+  async getCustomer(username: string) {
+    return this.client
+      .db(DB_NAME)
+      .collection<DbCustomer>("customers")
+      .findOne({username});
   }
 }
