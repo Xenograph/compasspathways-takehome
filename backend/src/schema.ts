@@ -6,10 +6,10 @@ export const typeDefs = gql`
   type Transaction {
     date: Date!
     amount: Int!
-    code: String!
+    transactionCode: String!
     symbol: String!
-    price: Float!
-    total: Float!
+    price: String!
+    total: String!
   }
 
   type Customer {

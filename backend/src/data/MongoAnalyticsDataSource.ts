@@ -2,6 +2,8 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 import AnalyticsDataSource from "../types/AnalyticsDataSource";
 import { DbCustomer } from "../types/DbCustomer";
 import { DbAccount } from "../types/DbAccount";
+import { DbTransactionRecord } from "../types/DbTransactionRecord";
+import { Transaction } from "../generated/graphql";
 
 const DB_NAME = "sample_analytics";
 
@@ -19,7 +21,7 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
   }
 
   async listCustomers(page: number, pageSize: number) {
-    return await this.client
+    return this.client
       .db(DB_NAME)
       .collection<DbCustomer>("customers")
       .find()
@@ -29,10 +31,40 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
   }
 
   async getAccount(accountId: number) {
-    const doc = await this.client
+    return this.client
       .db(DB_NAME)
       .collection<DbAccount>("accounts")
       .findOne({ account_id: accountId });
-      return doc;
+  }
+
+  async getTransactions(accountId: number, page: number, pageSize: number) {
+    const docs = await this.client
+      .db(DB_NAME)
+      .collection<DbTransactionRecord>("transactions")
+      .aggregate<{ transactions: Transaction[] }>([
+        {
+          $match: {
+            account_id: accountId,
+          },
+        },
+        {
+          $unwind: "$transactions",
+        },
+        {
+          $group: {
+            _id: "account_id",
+            transactions: { $push: "$transactions" },
+          },
+        },
+        {
+          $project: {
+            transactions: {
+              $slice: ["$transactions", page * pageSize, pageSize],
+            }, // Perform pagination on the nested array
+          },
+        },
+      ])
+      .toArray();
+    return docs[0].transactions;
   }
 }

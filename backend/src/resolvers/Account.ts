@@ -1,7 +1,9 @@
 import { AccountResolvers } from "../generated/graphql";
 
 const Query: AccountResolvers = {
-  accountId: async (parent, _args, ctx) => parent.account_id,
+  accountId: (parent, _args, _ctx) => parent.account_id,
+  transactions: (parent, { page, pageSize }, ctx) =>
+    ctx.dataSource.getTransactions(parent.account_id, page, pageSize),
 };
 
 export default Query;

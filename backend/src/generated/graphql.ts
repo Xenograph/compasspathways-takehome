@@ -68,11 +68,11 @@ export type TierAndDetails = {
 export type Transaction = {
   __typename?: 'Transaction';
   amount: Scalars['Int']['output'];
-  code: Scalars['String']['output'];
   date: Scalars['Date']['output'];
-  price: Scalars['Float']['output'];
+  price: Scalars['String']['output'];
   symbol: Scalars['String']['output'];
-  total: Scalars['Float']['output'];
+  total: Scalars['String']['output'];
+  transactionCode: Scalars['String']['output'];
 };
 
 export type AdditionalEntityFields = {
@@ -161,7 +161,6 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Transaction: ResolverTypeWrapper<Transaction>;
-  Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   AdditionalEntityFields: AdditionalEntityFields;
 };
 
@@ -177,7 +176,6 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   ID: Scalars['ID']['output'];
   Transaction: Transaction;
-  Float: Scalars['Float']['output'];
   AdditionalEntityFields: AdditionalEntityFields;
 };
 
@@ -265,11 +263,11 @@ export type TierAndDetailsResolvers<ContextType = ApolloContext, ParentType exte
 
 export type TransactionResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Transaction'] = ResolversParentTypes['Transaction']> = {
   amount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   date?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
-  price?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  price?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   symbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  total?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  transactionCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
