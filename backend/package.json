@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc",
-    "start": "npm run compile && node ./dist/index.js"
+    "start": "npm run compile && node ./dist/index.js",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,10 +14,18 @@
   "type": "module",
   "dependencies": {
     "@apollo/server": "^4.10.1",
-    "graphql": "^16.8.1"
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6",
+    "mongodb": "^6.5.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "5.0.2",
     "@types/node": "^20.11.29",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.2",
+    "@graphql-codegen/typescript-resolvers": "4.0.6",
+    "@graphql-codegen/typescript": "4.0.6",
+    "@graphql-codegen/typescript-document-nodes": "4.0.6",
+    "@graphql-codegen/typescript-mongodb": "3.0.0",
+    "@graphql-codegen/introspection": "4.0.3"
   }
 }
