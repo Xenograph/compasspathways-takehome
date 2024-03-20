@@ -54,6 +54,11 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
           $unwind: "$transactions",
         },
         {
+          $sort: {
+            "transactions.date": -1
+          }
+        },
+        {
           $group: {
             _id: "account_id",
             transactions: { $push: "$transactions" },
