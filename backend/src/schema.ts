@@ -53,7 +53,7 @@ export const typeDefs = gql`
 
   type Query {
     customers(page: Int!, pageSize: Int!): CustomerPage!
-    customer(username: String!): Customer
+    customer(_id: ID!): Customer
     account(accountId: Int!): Account
   }
 `;

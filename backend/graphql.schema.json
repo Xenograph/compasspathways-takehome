@@ -423,14 +423,14 @@
             "description": null,
             "args": [
               {
-                "name": "username",
+                "name": "_id",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
                     "kind": "SCALAR",
-                    "name": "String",
+                    "name": "ID",
                     "ofType": null
                   }
                 },

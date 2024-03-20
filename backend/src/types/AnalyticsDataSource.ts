@@ -11,5 +11,5 @@ export default interface AnalyticsDataSource {
     page: number,
     pageSize: number
   ): Promise<PagedData<Transaction>>;
-  getCustomer(username: string): Promise<DbCustomer>;
+  getCustomer(_id: string): Promise<DbCustomer>;
 }

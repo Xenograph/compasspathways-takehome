@@ -1,4 +1,4 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import AnalyticsDataSource from "../types/AnalyticsDataSource";
 import { DbCustomer } from "../types/DbCustomer";
 import { DbAccount } from "../types/DbAccount";
@@ -81,10 +81,10 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
     };
   }
 
-  async getCustomer(username: string) {
+  async getCustomer(_id: string) {
     return this.client
       .db(DB_NAME)
       .collection<DbCustomer>("customers")
-      .findOne({ username });
+      .findOne({_id: new ObjectId(_id)});
   }
 }

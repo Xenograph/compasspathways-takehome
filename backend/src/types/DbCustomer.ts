@@ -1,5 +1,7 @@
+import { ObjectId } from "mongodb";
+
 export interface DbCustomer {
-  _id: string;
+  _id: ObjectId;
   username: string;
   name: string;
   address: string;
