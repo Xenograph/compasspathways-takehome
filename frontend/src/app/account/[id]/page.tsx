@@ -10,6 +10,7 @@ import { getClient } from '@/lib/client';
 import { graphql } from '@/gql';
 import Header from '@/components/Header';
 import Paginator from '@/components/Paginator';
+import { notFound } from 'next/navigation';
 
 const PAGE_SIZE = 10;
 
@@ -59,7 +60,7 @@ export default async function AccountPage({
   });
 
   if (!data.account) {
-    return <p>Account not found</p>;
+    return notFound();
   }
 
   return (

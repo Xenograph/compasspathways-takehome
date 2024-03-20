@@ -13,6 +13,7 @@ import Link from 'next/link';
 import CheckCircle from '@/components/icons/CheckCircle';
 import { XCircle } from 'lucide-react';
 import Header from '@/components/Header';
+import { notFound } from 'next/navigation';
 
 export default async function CustomerPage({
   params
@@ -46,7 +47,7 @@ export default async function CustomerPage({
   });
 
   if (!data.customer) {
-    return <p>Customer not found</p>;
+    return notFound();
   }
 
   return (
