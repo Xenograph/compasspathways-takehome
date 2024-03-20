@@ -17,7 +17,8 @@ const config: CodegenConfig = {
           Customer: '../types/DbCustomer.js#DbCustomer',
           Account: '../types/DbAccount.js#DbAccount',
           Transaction: '../types/DbTransactionRecord.js#DbTransaction'
-        }
+        },
+        makeResolverTypeCallable: true
       }
     },
     './graphql.schema.json': {
