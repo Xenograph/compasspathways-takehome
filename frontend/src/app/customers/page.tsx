@@ -43,7 +43,7 @@ export default async function Accounts({
     variables: {
       page: pageNum,
       pageSize: PAGE_SIZE,
-      searchFilter: searchParams.search,
+      searchFilter: searchParams.search?.toString(),
     },
   });
 
