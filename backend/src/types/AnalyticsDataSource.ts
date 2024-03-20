@@ -1,6 +1,6 @@
-import { Transaction } from "../generated/graphql";
 import { DbAccount } from "./DbAccount";
 import { DbCustomer } from "./DbCustomer";
+import { DbTransaction } from "./DbTransactionRecord";
 import PagedData from "./PagedData";
 
 export default interface AnalyticsDataSource {
@@ -10,6 +10,6 @@ export default interface AnalyticsDataSource {
     accountId: number,
     page: number,
     pageSize: number
-  ): Promise<PagedData<Transaction>>;
+  ): Promise<PagedData<DbTransaction>>;
   getCustomer(_id: string): Promise<DbCustomer>;
 }

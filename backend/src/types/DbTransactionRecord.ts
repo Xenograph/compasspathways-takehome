@@ -6,7 +6,7 @@ export interface DbTransactionRecord {
     transactions: DbTransaction[];
 }
 
-interface DbTransaction {
+export interface DbTransaction {
     date: Date;
     amount: number;
     transaction_code: string;

@@ -16,6 +16,7 @@ const config: CodegenConfig = {
         mappers: {
           Customer: "../types/DbCustomer.js#DbCustomer",
           Account: "../types/DbAccount.js#DbAccount",
+          Transaction: "../types/DbTransactionRecord.js#DbTransaction",
         },
       },
     },

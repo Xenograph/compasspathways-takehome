@@ -1,6 +1,7 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { DbCustomer } from '../types/DbCustomer.js';
 import { DbAccount } from '../types/DbAccount.js';
+import { DbTransaction } from '../types/DbTransactionRecord.js';
 import { ApolloContext } from '../types/ApolloContext.js';
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
@@ -188,8 +189,8 @@ export type ResolversTypes = {
   Date: ResolverTypeWrapper<Scalars['Date']['output']>;
   Query: ResolverTypeWrapper<{}>;
   TierAndDetails: ResolverTypeWrapper<TierAndDetails>;
-  Transaction: ResolverTypeWrapper<Transaction>;
-  TransactionPage: ResolverTypeWrapper<TransactionPage>;
+  Transaction: ResolverTypeWrapper<DbTransaction>;
+  TransactionPage: ResolverTypeWrapper<Omit<TransactionPage, 'items'> & { items: Array<ResolversTypes['Transaction']> }>;
   AdditionalEntityFields: AdditionalEntityFields;
 };
 
@@ -205,8 +206,8 @@ export type ResolversParentTypes = {
   Date: Scalars['Date']['output'];
   Query: {};
   TierAndDetails: TierAndDetails;
-  Transaction: Transaction;
-  TransactionPage: TransactionPage;
+  Transaction: DbTransaction;
+  TransactionPage: Omit<TransactionPage, 'items'> & { items: Array<ResolversParentTypes['Transaction']> };
   AdditionalEntityFields: AdditionalEntityFields;
 };
 

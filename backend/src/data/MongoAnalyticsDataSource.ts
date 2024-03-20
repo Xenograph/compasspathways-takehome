@@ -2,8 +2,7 @@ import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import AnalyticsDataSource from "../types/AnalyticsDataSource";
 import { DbCustomer } from "../types/DbCustomer";
 import { DbAccount } from "../types/DbAccount";
-import { DbTransactionRecord } from "../types/DbTransactionRecord";
-import { Transaction } from "../generated/graphql";
+import { DbTransaction, DbTransactionRecord } from "../types/DbTransactionRecord";
 
 const DB_NAME = "sample_analytics";
 
@@ -45,7 +44,7 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
     const docs = await this.client
       .db(DB_NAME)
       .collection<DbTransactionRecord>("transactions")
-      .aggregate<{ transactions: Transaction[] }>([
+      .aggregate<{ transactions: DbTransaction[] }>([
         {
           $match: {
             account_id: accountId,
@@ -63,7 +62,7 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
         {
           $project: {
             transactions: {
-              $slice: ["$transactions", (page - 1) * pageSize, pageSize],
+              $slice: ["$transactions", (page - 1) * pageSize, pageSize+1],
             }, // Perform pagination on the nested array
           },
         },
