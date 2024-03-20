@@ -22,6 +22,10 @@ docker run -it --rm --net=host \
 takehome-backend
 ```
 
+## Tests
+
+You can run tests inside the `backend` directory with `npm run test`.
+
 # Frontend
 
 The frontend is a NextJS React application using the new App Router and Server Components whenever possible. It uses Apollo GraphQL client to load data from the backend.
@@ -37,3 +41,7 @@ docker build . --build-arg NEXT_PUBLIC_BACKEND_URL=http://localhost:4000 -t take
 
 docker run -it --rm --net=host takehome-frontend
 ```
+
+## Tests
+
+You can run tests inside the `frontend` directory with `npm run test`.
