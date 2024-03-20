@@ -24,6 +24,7 @@ export type Scalars = {
 
 export type Account = {
   __typename?: 'Account';
+  _id: Scalars['ID']['output'];
   accountId: Scalars['Int']['output'];
   limit: Scalars['Int']['output'];
   products: Array<Scalars['String']['output']>;
@@ -38,6 +39,7 @@ export type AccountTransactionsArgs = {
 
 export type Customer = {
   __typename?: 'Customer';
+  _id: Scalars['ID']['output'];
   accounts: Array<Account>;
   address: Scalars['String']['output'];
   birthdate: Scalars['Date']['output'];
@@ -80,7 +82,7 @@ export type TierAndDetails = {
   __typename?: 'TierAndDetails';
   active: Scalars['Boolean']['output'];
   benefits: Array<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
+  id: Scalars['String']['output'];
   tier: Scalars['String']['output'];
 };
 
@@ -177,6 +179,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Account: ResolverTypeWrapper<DbAccount>;
+  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Customer: ResolverTypeWrapper<DbCustomer>;
@@ -185,7 +188,6 @@ export type ResolversTypes = {
   Date: ResolverTypeWrapper<Scalars['Date']['output']>;
   Query: ResolverTypeWrapper<{}>;
   TierAndDetails: ResolverTypeWrapper<TierAndDetails>;
-  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Transaction: ResolverTypeWrapper<Transaction>;
   TransactionPage: ResolverTypeWrapper<TransactionPage>;
   AdditionalEntityFields: AdditionalEntityFields;
@@ -194,6 +196,7 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Account: DbAccount;
+  ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   String: Scalars['String']['output'];
   Customer: DbCustomer;
@@ -202,7 +205,6 @@ export type ResolversParentTypes = {
   Date: Scalars['Date']['output'];
   Query: {};
   TierAndDetails: TierAndDetails;
-  ID: Scalars['ID']['output'];
   Transaction: Transaction;
   TransactionPage: TransactionPage;
   AdditionalEntityFields: AdditionalEntityFields;
@@ -256,6 +258,7 @@ export type MapDirectiveArgs = {
 export type MapDirectiveResolver<Result, Parent, ContextType = ApolloContext, Args = MapDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type AccountResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']> = {
+  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   accountId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   limit?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   products?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
@@ -264,6 +267,7 @@ export type AccountResolvers<ContextType = ApolloContext, ParentType extends Res
 };
 
 export type CustomerResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Customer'] = ResolversParentTypes['Customer']> = {
+  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   accounts?: Resolver<Array<ResolversTypes['Account']>, ParentType, ContextType>;
   address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   birthdate?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
@@ -293,7 +297,7 @@ export type QueryResolvers<ContextType = ApolloContext, ParentType extends Resol
 export type TierAndDetailsResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['TierAndDetails'] = ResolversParentTypes['TierAndDetails']> = {
   active?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   benefits?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   tier?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

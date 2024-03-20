@@ -1,4 +1,5 @@
 export interface DbCustomer {
+  _id: string;
   username: string;
   name: string;
   address: string;

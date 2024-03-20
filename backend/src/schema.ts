@@ -13,6 +13,7 @@ export const typeDefs = gql`
   }
 
   type Customer {
+    _id: ID!
     username: String!
     name: String!
     address: String!
@@ -23,13 +24,14 @@ export const typeDefs = gql`
   }
 
   type TierAndDetails {
-    id: ID!
+    id: String!
     tier: String!
     benefits: [String!]!
     active: Boolean!
   }
 
   type Account {
+    _id: ID!
     accountId: Int!
     limit: Int!
     products: [String!]!
