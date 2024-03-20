@@ -77,6 +77,7 @@ export type QueryCustomerArgs = {
 export type QueryCustomersArgs = {
   page: Scalars['Int']['input'];
   pageSize: Scalars['Int']['input'];
+  searchFilter?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type TierAndDetails = {

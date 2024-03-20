@@ -4,7 +4,7 @@ import { DbTransaction } from "./DbTransactionRecord";
 import PagedData from "./PagedData";
 
 export default interface AnalyticsDataSource {
-  listCustomers(page: number, pageSize: number): Promise<PagedData<DbCustomer>>;
+  listCustomers(page: number, pageSize: number, searchFilter?: string): Promise<PagedData<DbCustomer>>;
   getAccount(accountId: number): Promise<DbAccount>;
   listTransactions(
     accountId: number,

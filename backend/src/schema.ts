@@ -52,7 +52,7 @@ export const typeDefs = gql`
   }
 
   type Query {
-    customers(page: Int!, pageSize: Int!): CustomerPage!
+    customers(searchFilter: String, page: Int!, pageSize: Int!): CustomerPage!
     customer(_id: ID!): Customer
     account(accountId: Int!): Account
   }

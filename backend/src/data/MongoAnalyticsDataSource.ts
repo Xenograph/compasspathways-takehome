@@ -2,7 +2,10 @@ import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import AnalyticsDataSource from "../types/AnalyticsDataSource";
 import { DbCustomer } from "../types/DbCustomer";
 import { DbAccount } from "../types/DbAccount";
-import { DbTransaction, DbTransactionRecord } from "../types/DbTransactionRecord";
+import {
+  DbTransaction,
+  DbTransactionRecord,
+} from "../types/DbTransactionRecord";
 
 const DB_NAME = "sample_analytics";
 
@@ -19,16 +22,27 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
     });
   }
 
-  async listCustomers(page: number, pageSize: number) {
+  async listCustomers(page: number, pageSize: number, searchFilter?: string) {
     const customers = await this.client
       .db(DB_NAME)
       .collection<DbCustomer>("customers")
-      .find()
+      .find(
+        searchFilter
+          ? {
+              $or: [
+                { username: { $regex: searchFilter, $options: "i" } }, // Case-insensitive regex match
+                { name: { $regex: searchFilter, $options: "i" } },
+                { email: { $regex: searchFilter, $options: "i" } },
+              ],
+            }
+          : {}
+      )
       .skip((page - 1) * pageSize)
       .limit(pageSize + 1)
       .toArray();
     return {
-      items: customers,
+      items:
+        customers.length > pageSize ? customers.slice(0, pageSize) : customers,
       more: customers.length > pageSize,
     };
   }
@@ -55,8 +69,8 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
         },
         {
           $sort: {
-            "transactions.date": -1
-          }
+            "transactions.date": -1,
+          },
         },
         {
           $group: {
@@ -67,7 +81,7 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
         {
           $project: {
             transactions: {
-              $slice: ["$transactions", (page - 1) * pageSize, pageSize+1],
+              $slice: ["$transactions", (page - 1) * pageSize, pageSize + 1],
             }, // Perform pagination on the nested array
           },
         },
@@ -80,7 +94,10 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
       };
     }
     return {
-      items: docs[0].transactions,
+      items:
+        docs[0].transactions.length > pageSize
+          ? docs[0].transactions.slice(0, pageSize)
+          : docs[0].transactions,
       more: docs[0].transactions.length > pageSize,
     };
   }
@@ -89,6 +106,6 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
     return this.client
       .db(DB_NAME)
       .collection<DbCustomer>("customers")
-      .findOne({_id: new ObjectId(_id)});
+      .findOne({ _id: new ObjectId(_id) });
   }
 }

@@ -12,6 +12,7 @@ import { graphql } from "@/gql";
 import Link from "next/link";
 import Paginator from "@/components/Paginator";
 import Header from "@/components/Header";
+import SearchBox from "@/components/SearchBox";
 
 const PAGE_SIZE = 15;
 
@@ -23,8 +24,12 @@ export default async function Accounts({
   const pageNum = Number(searchParams.page) || 1;
   const { data } = await getClient().query({
     query: graphql(`
-      query ListCustomers($page: Int!, $pageSize: Int!) {
-        customers(page: $page, pageSize: $pageSize) {
+      query ListCustomers($page: Int!, $pageSize: Int!, $searchFilter: String) {
+        customers(
+          page: $page
+          pageSize: $pageSize
+          searchFilter: $searchFilter
+        ) {
           items {
             _id
             username
@@ -35,13 +40,18 @@ export default async function Accounts({
         }
       }
     `),
-    variables: { page: pageNum, pageSize: PAGE_SIZE },
+    variables: {
+      page: pageNum,
+      pageSize: PAGE_SIZE,
+      searchFilter: searchParams.search,
+    },
   });
 
   return (
     <>
       <Header heading={`Customers`} />
       <main className="p-4 m-4 rounded-lg border">
+        <SearchBox />
         <Table>
           <TableHeader>
             <TableRow>
