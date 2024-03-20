@@ -63,7 +63,7 @@ export default async function Home({ searchParams }: { searchParams: any }) {
             ))}
           </TableBody>
         </Table>
-        <Paginator pageNum={pageNum} more={data.customers.more} />
+        <Paginator more={data.customers.more} />
       </main>
     </>
   );

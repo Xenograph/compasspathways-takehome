@@ -41,7 +41,7 @@ export const typeDefs = gql`
 
   type CustomerPage {
     items: [Customer!]!
-    more: Boolean
+    more: Boolean!
   }
 
   type TransactionPage {

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Pagination,
@@ -8,30 +10,39 @@ import {
   PaginationEllipsis,
   PaginationNext,
 } from "./ui/pagination";
+import { useSearchParams } from "next/navigation";
 
 type Props = {
-  pageNum: number;
   more: boolean;
-  searchParams: { [key: string]: string | string[] | undefined };
 };
 
-const Paginator: React.FC<Props> = ({ pageNum, more, searchParams }) => {
+const Paginator: React.FC<Props> = ({ more }) => {
+  const searchParams = useSearchParams();
+  const pageNum = Number(searchParams.get('page')) || 1;
+  const paramsObj = Object.fromEntries(searchParams.entries());
+
   return (
     <Pagination>
       <PaginationContent>
         {pageNum > 1 && (
           <PaginationItem>
-            <PaginationPrevious href={{
-                  query: { ...searchParams, page: pageNum - 1 },
-                }} />
+            <PaginationPrevious
+              href={{
+                query: { ...paramsObj, page: pageNum - 1 },
+              }}
+            />
           </PaginationItem>
         )}
         {pageNum > 2 && (
           <>
             <PaginationItem>
-              <PaginationLink href={{
-                  query: { ...searchParams, page: 1 },
-                }}>1</PaginationLink>
+              <PaginationLink
+                href={{
+                  query: { ...paramsObj, page: 1 },
+                }}
+              >
+                1
+              </PaginationLink>
             </PaginationItem>
             <PaginationItem>
               <PaginationEllipsis />
@@ -40,9 +51,11 @@ const Paginator: React.FC<Props> = ({ pageNum, more, searchParams }) => {
         )}
         {pageNum > 1 && (
           <PaginationItem>
-            <PaginationLink href={{
-                  query: { ...searchParams, page: pageNum - 1 },
-                }}>
+            <PaginationLink
+              href={{
+                query: { ...paramsObj, page: pageNum - 1 },
+              }}
+            >
               {pageNum - 1}
             </PaginationLink>
           </PaginationItem>
@@ -55,16 +68,18 @@ const Paginator: React.FC<Props> = ({ pageNum, more, searchParams }) => {
         {more && (
           <>
             <PaginationItem>
-              <PaginationLink href={{
-                  query: { ...searchParams, page: pageNum + 1 },
-                }}>
+              <PaginationLink
+                href={{
+                  query: { ...paramsObj, page: pageNum + 1 },
+                }}
+              >
                 {pageNum + 1}
               </PaginationLink>
             </PaginationItem>
             <PaginationItem>
               <PaginationNext
                 href={{
-                  query: { ...searchParams, page: pageNum + 1 },
+                  query: { ...paramsObj, page: pageNum + 1 },
                 }}
               />
             </PaginationItem>

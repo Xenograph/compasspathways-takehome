@@ -45,7 +45,7 @@ export type Customer = {
 export type CustomerPage = {
   __typename?: 'CustomerPage';
   items: Array<Customer>;
-  more?: Maybe<Scalars['Boolean']['output']>;
+  more: Scalars['Boolean']['output'];
 };
 
 export type Query = {
@@ -101,7 +101,7 @@ export type ListCustomersQueryVariables = Exact<{
 }>;
 
 
-export type ListCustomersQuery = { __typename?: 'Query', customers: { __typename?: 'CustomerPage', more?: boolean | null, items: Array<{ __typename?: 'Customer', username: string, name: string, email: string }> } };
+export type ListCustomersQuery = { __typename?: 'Query', customers: { __typename?: 'CustomerPage', more: boolean, items: Array<{ __typename?: 'Customer', username: string, name: string, email: string }> } };
 
 
 export const ListCustomersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ListCustomers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"page"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"customers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"page"},"value":{"kind":"Variable","name":{"kind":"Name","value":"page"}}},{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"more"}}]}}]}}]} as unknown as DocumentNode<ListCustomersQuery, ListCustomersQueryVariables>;

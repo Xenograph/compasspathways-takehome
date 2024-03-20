@@ -50,7 +50,7 @@ export type Customer = {
 export type CustomerPage = {
   __typename?: 'CustomerPage';
   items: Array<Customer>;
-  more?: Maybe<Scalars['Boolean']['output']>;
+  more: Scalars['Boolean']['output'];
 };
 
 export type Query = {
@@ -276,7 +276,7 @@ export type CustomerResolvers<ContextType = ApolloContext, ParentType extends Re
 
 export type CustomerPageResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['CustomerPage'] = ResolversParentTypes['CustomerPage']> = {
   items?: Resolver<Array<ResolversTypes['Customer']>, ParentType, ContextType>;
-  more?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  more?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
