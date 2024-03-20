@@ -17,11 +17,6 @@ function formatCurrency(value: string) {
   return "$" + formatNumberWithCommas(parseFloat(value).toFixed(2));
 }
 
-function formatDate(date: number) {
-  const d = new Date(date);
-  return `${d.getFullYear()}-${("0" + d.getDate()).slice(-2)}-${("0" + d.getDate()).slice(-2)}`
-}
-
 function formatNumberWithCommas(num: number|string) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -103,7 +98,7 @@ export default async function AccountPage({
               <TableBody>
                 {data.account.transactions.items.map((t) => (
                   <TableRow key={`${t.date}:${t.symbol}:${t.total}:${t.price}`}>
-                    <TableCell className="font-medium">{formatDate(t.date)}</TableCell>
+                    <TableCell className="font-medium">{t.date.split('T')[0]}</TableCell>
                     <TableCell>{t.transactionCode}</TableCell>
                     <TableCell>{t.symbol.toUpperCase()}</TableCell>
                     <TableCell>{formatNumberWithCommas(t.amount)}</TableCell>
