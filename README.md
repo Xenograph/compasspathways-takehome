@@ -18,7 +18,7 @@ cd backend
 docker build . -t takehome-backend 
 
 docker run -it --rm --net=host \
--e MONGODB_URI="***REMOVED***" \
+-e MONGODB_URI="<MONGO_DB_CONNECTION_URI>" \
 takehome-backend
 ```
 
