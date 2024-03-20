@@ -10,6 +10,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -26,7 +27,7 @@ export type Account = {
   accountId: Scalars['Int']['output'];
   limit: Scalars['Int']['output'];
   products: Array<Scalars['String']['output']>;
-  transactions: Array<Transaction>;
+  transactions: TransactionPage;
 };
 
 
@@ -46,11 +47,17 @@ export type Customer = {
   username: Scalars['String']['output'];
 };
 
+export type CustomerPage = {
+  __typename?: 'CustomerPage';
+  items: Array<Customer>;
+  more?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   account?: Maybe<Account>;
   customer?: Maybe<Customer>;
-  customers: Array<Customer>;
+  customers: CustomerPage;
 };
 
 
@@ -85,6 +92,12 @@ export type Transaction = {
   symbol: Scalars['String']['output'];
   total: Scalars['String']['output'];
   transactionCode: Scalars['String']['output'];
+};
+
+export type TransactionPage = {
+  __typename?: 'TransactionPage';
+  items: Array<Transaction>;
+  more: Scalars['Boolean']['output'];
 };
 
 export type AdditionalEntityFields = {
@@ -167,12 +180,14 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Customer: ResolverTypeWrapper<DbCustomer>;
+  CustomerPage: ResolverTypeWrapper<Omit<CustomerPage, 'items'> & { items: Array<ResolversTypes['Customer']> }>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Date: ResolverTypeWrapper<Scalars['Date']['output']>;
   Query: ResolverTypeWrapper<{}>;
   TierAndDetails: ResolverTypeWrapper<TierAndDetails>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Transaction: ResolverTypeWrapper<Transaction>;
+  TransactionPage: ResolverTypeWrapper<TransactionPage>;
   AdditionalEntityFields: AdditionalEntityFields;
 };
 
@@ -182,12 +197,14 @@ export type ResolversParentTypes = {
   Int: Scalars['Int']['output'];
   String: Scalars['String']['output'];
   Customer: DbCustomer;
+  CustomerPage: Omit<CustomerPage, 'items'> & { items: Array<ResolversParentTypes['Customer']> };
+  Boolean: Scalars['Boolean']['output'];
   Date: Scalars['Date']['output'];
   Query: {};
   TierAndDetails: TierAndDetails;
-  Boolean: Scalars['Boolean']['output'];
   ID: Scalars['ID']['output'];
   Transaction: Transaction;
+  TransactionPage: TransactionPage;
   AdditionalEntityFields: AdditionalEntityFields;
 };
 
@@ -242,7 +259,7 @@ export type AccountResolvers<ContextType = ApolloContext, ParentType extends Res
   accountId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   limit?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   products?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
-  transactions?: Resolver<Array<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<AccountTransactionsArgs, 'page' | 'pageSize'>>;
+  transactions?: Resolver<ResolversTypes['TransactionPage'], ParentType, ContextType, RequireFields<AccountTransactionsArgs, 'page' | 'pageSize'>>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -257,6 +274,12 @@ export type CustomerResolvers<ContextType = ApolloContext, ParentType extends Re
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CustomerPageResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['CustomerPage'] = ResolversParentTypes['CustomerPage']> = {
+  items?: Resolver<Array<ResolversTypes['Customer']>, ParentType, ContextType>;
+  more?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
   name: 'Date';
 }
@@ -264,7 +287,7 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 export type QueryResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   account?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, RequireFields<QueryAccountArgs, 'accountId'>>;
   customer?: Resolver<Maybe<ResolversTypes['Customer']>, ParentType, ContextType, RequireFields<QueryCustomerArgs, 'username'>>;
-  customers?: Resolver<Array<ResolversTypes['Customer']>, ParentType, ContextType, RequireFields<QueryCustomersArgs, 'page' | 'pageSize'>>;
+  customers?: Resolver<ResolversTypes['CustomerPage'], ParentType, ContextType, RequireFields<QueryCustomersArgs, 'page' | 'pageSize'>>;
 };
 
 export type TierAndDetailsResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['TierAndDetails'] = ResolversParentTypes['TierAndDetails']> = {
@@ -285,13 +308,21 @@ export type TransactionResolvers<ContextType = ApolloContext, ParentType extends
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type TransactionPageResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['TransactionPage'] = ResolversParentTypes['TransactionPage']> = {
+  items?: Resolver<Array<ResolversTypes['Transaction']>, ParentType, ContextType>;
+  more?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = ApolloContext> = {
   Account?: AccountResolvers<ContextType>;
   Customer?: CustomerResolvers<ContextType>;
+  CustomerPage?: CustomerPageResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;
   TierAndDetails?: TierAndDetailsResolvers<ContextType>;
   Transaction?: TransactionResolvers<ContextType>;
+  TransactionPage?: TransactionPageResolvers<ContextType>;
 };
 
 export type DirectiveResolvers<ContextType = ApolloContext> = {

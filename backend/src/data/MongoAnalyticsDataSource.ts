@@ -21,13 +21,17 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
   }
 
   async listCustomers(page: number, pageSize: number) {
-    return this.client
+    const customers = await this.client
       .db(DB_NAME)
       .collection<DbCustomer>("customers")
       .find()
-      .skip(page * pageSize)
-      .limit(pageSize)
+      .skip((page - 1) * pageSize)
+      .limit(pageSize + 1)
       .toArray();
+    return {
+      items: customers,
+      more: customers.length > pageSize,
+    };
   }
 
   async getAccount(accountId: number) {
@@ -37,7 +41,7 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
       .findOne({ account_id: accountId });
   }
 
-  async getTransactions(accountId: number, page: number, pageSize: number) {
+  async listTransactions(accountId: number, page: number, pageSize: number) {
     const docs = await this.client
       .db(DB_NAME)
       .collection<DbTransactionRecord>("transactions")
@@ -59,20 +63,28 @@ export default class MongoAnalyticsDataSource implements AnalyticsDataSource {
         {
           $project: {
             transactions: {
-              $slice: ["$transactions", page * pageSize, pageSize],
+              $slice: ["$transactions", (page - 1) * pageSize, pageSize],
             }, // Perform pagination on the nested array
           },
         },
       ])
       .toArray();
-    // TODO: handle empty array
-    return docs[0].transactions;
+    if (!docs.length) {
+      return {
+        items: [],
+        more: false,
+      };
+    }
+    return {
+      items: docs[0].transactions,
+      more: docs[0].transactions.length > pageSize,
+    };
   }
 
   async getCustomer(username: string) {
     return this.client
       .db(DB_NAME)
       .collection<DbCustomer>("customers")
-      .findOne({username});
+      .findOne({ username });
   }
 }

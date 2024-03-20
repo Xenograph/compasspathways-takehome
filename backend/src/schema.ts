@@ -36,11 +36,21 @@ export const typeDefs = gql`
     transactions(
       page: Int!
       pageSize: Int!
-    ): [Transaction!]!
+    ): TransactionPage!
+  }
+
+  type CustomerPage {
+    items: [Customer!]!
+    more: Boolean
+  }
+
+  type TransactionPage {
+    items: [Transaction!]!
+    more: Boolean!
   }
 
   type Query {
-    customers(page: Int!, pageSize: Int!): [Customer!]!
+    customers(page: Int!, pageSize: Int!): CustomerPage!
     customer(username: String!): Customer
     account(accountId: Int!): Account
   }
