@@ -13,12 +13,13 @@ import {
 import { useSearchParams } from "next/navigation";
 
 type Props = {
+  paramName: string;
   more: boolean;
 };
 
-const Paginator: React.FC<Props> = ({ more }) => {
+const Paginator: React.FC<Props> = ({ paramName, more }) => {
   const searchParams = useSearchParams();
-  const pageNum = Number(searchParams.get('page')) || 1;
+  const pageNum = Number(searchParams.get(paramName)) || 1;
   const paramsObj = Object.fromEntries(searchParams.entries());
 
   return (
@@ -28,7 +29,7 @@ const Paginator: React.FC<Props> = ({ more }) => {
           <PaginationItem>
             <PaginationPrevious
               href={{
-                query: { ...paramsObj, page: pageNum - 1 },
+                query: { ...paramsObj, [paramName]: pageNum - 1 },
               }}
             />
           </PaginationItem>
@@ -38,7 +39,7 @@ const Paginator: React.FC<Props> = ({ more }) => {
             <PaginationItem>
               <PaginationLink
                 href={{
-                  query: { ...paramsObj, page: 1 },
+                  query: { ...paramsObj, [paramName]: 1 },
                 }}
               >
                 1
@@ -53,7 +54,7 @@ const Paginator: React.FC<Props> = ({ more }) => {
           <PaginationItem>
             <PaginationLink
               href={{
-                query: { ...paramsObj, page: pageNum - 1 },
+                query: { ...paramsObj, [paramName]: pageNum - 1 },
               }}
             >
               {pageNum - 1}
@@ -70,7 +71,7 @@ const Paginator: React.FC<Props> = ({ more }) => {
             <PaginationItem>
               <PaginationLink
                 href={{
-                  query: { ...paramsObj, page: pageNum + 1 },
+                  query: { ...paramsObj, [paramName]: pageNum + 1 },
                 }}
               >
                 {pageNum + 1}
@@ -79,7 +80,7 @@ const Paginator: React.FC<Props> = ({ more }) => {
             <PaginationItem>
               <PaginationNext
                 href={{
-                  query: { ...paramsObj, page: pageNum + 1 },
+                  query: { ...paramsObj, [paramName]: pageNum + 1 },
                 }}
               />
             </PaginationItem>
