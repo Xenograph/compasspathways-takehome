@@ -7,7 +7,7 @@ export default class FakeAnalyticsDataSource implements AnalyticsDataSource {
   constructor(
     private customers: DbCustomer[],
     private accounts: DbAccount[],
-    private transactions: {[accountId: string]: DbTransaction[]}
+    private transactions: { [accountId: string]: DbTransaction[] }
   ) {}
 
   async listCustomers(page: number, pageSize: number, searchFilter?: string) {
@@ -33,7 +33,7 @@ export default class FakeAnalyticsDataSource implements AnalyticsDataSource {
 
   async listTransactions(accountId: number, page: number, pageSize: number) {
     const accountTxns = this.transactions[accountId];
-    if(!accountTxns) return {items: [], more: false};
+    if (!accountTxns) return { items: [], more: false };
     const skip = (page - 1) * pageSize;
     if (skip >= accountTxns.length) return { items: [], more: false };
     return {

@@ -78,7 +78,9 @@ export default async function Accounts({
             </TableBody>
           </Table>
         ) : (
-          <p className="m-4 text-center font-semibold">No matching accounts found</p>
+          <p className="m-4 text-center font-semibold">
+            No matching accounts found
+          </p>
         )}
       </main>
       <Paginator paramName="page" more={data.customers.more} />
