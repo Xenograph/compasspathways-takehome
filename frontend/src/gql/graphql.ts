@@ -92,7 +92,7 @@ export type Transaction = {
 export type TransactionPage = {
   __typename?: 'TransactionPage';
   items: Array<Transaction>;
-  more?: Maybe<Scalars['Boolean']['output']>;
+  more: Scalars['Boolean']['output'];
 };
 
 export type ListCustomersQueryVariables = Exact<{
