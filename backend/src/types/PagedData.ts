@@ -1,4 +1,4 @@
 export default interface PagedData<T> {
-    items: T[];
-    more: boolean;
+  items: T[];
+  more: boolean;
 }

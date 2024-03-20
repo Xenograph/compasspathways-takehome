@@ -1,5 +1,5 @@
-import AnalyticsDataSource from "./AnalyticsDataSource";
+import AnalyticsDataSource from './AnalyticsDataSource';
 
 export interface ApolloContext {
-    dataSource: AnalyticsDataSource;
+  dataSource: AnalyticsDataSource;
 }

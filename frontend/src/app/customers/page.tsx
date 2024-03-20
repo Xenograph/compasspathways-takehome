@@ -4,20 +4,20 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { getClient } from "@/lib/client";
-import { graphql } from "@/gql";
-import Link from "next/link";
-import Paginator from "@/components/Paginator";
-import Header from "@/components/Header";
-import SearchBox from "@/components/SearchBox";
+  TableRow
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { getClient } from '@/lib/client';
+import { graphql } from '@/gql';
+import Link from 'next/link';
+import Paginator from '@/components/Paginator';
+import Header from '@/components/Header';
+import SearchBox from '@/components/SearchBox';
 
 const PAGE_SIZE = 15;
 
 export default async function Accounts({
-  searchParams,
+  searchParams
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
@@ -43,8 +43,8 @@ export default async function Accounts({
     variables: {
       page: pageNum,
       pageSize: PAGE_SIZE,
-      searchFilter: searchParams.search?.toString(),
-    },
+      searchFilter: searchParams.search?.toString()
+    }
   });
 
   return (

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 import {
   Pagination,
   PaginationContent,
@@ -8,9 +8,9 @@ import {
   PaginationPrevious,
   PaginationLink,
   PaginationEllipsis,
-  PaginationNext,
-} from "./ui/pagination";
-import { useSearchParams } from "next/navigation";
+  PaginationNext
+} from './ui/pagination';
+import { useSearchParams } from 'next/navigation';
 
 type Props = {
   paramName: string;
@@ -29,7 +29,7 @@ const Paginator: React.FC<Props> = ({ paramName, more }) => {
           <PaginationItem>
             <PaginationPrevious
               href={{
-                query: { ...paramsObj, [paramName]: pageNum - 1 },
+                query: { ...paramsObj, [paramName]: pageNum - 1 }
               }}
             />
           </PaginationItem>
@@ -39,7 +39,7 @@ const Paginator: React.FC<Props> = ({ paramName, more }) => {
             <PaginationItem>
               <PaginationLink
                 href={{
-                  query: { ...paramsObj, [paramName]: 1 },
+                  query: { ...paramsObj, [paramName]: 1 }
                 }}
               >
                 1
@@ -54,7 +54,7 @@ const Paginator: React.FC<Props> = ({ paramName, more }) => {
           <PaginationItem>
             <PaginationLink
               href={{
-                query: { ...paramsObj, [paramName]: pageNum - 1 },
+                query: { ...paramsObj, [paramName]: pageNum - 1 }
               }}
             >
               {pageNum - 1}
@@ -71,7 +71,7 @@ const Paginator: React.FC<Props> = ({ paramName, more }) => {
             <PaginationItem>
               <PaginationLink
                 href={{
-                  query: { ...paramsObj, [paramName]: pageNum + 1 },
+                  query: { ...paramsObj, [paramName]: pageNum + 1 }
                 }}
               >
                 {pageNum + 1}
@@ -80,7 +80,7 @@ const Paginator: React.FC<Props> = ({ paramName, more }) => {
             <PaginationItem>
               <PaginationNext
                 href={{
-                  query: { ...paramsObj, [paramName]: pageNum + 1 },
+                  query: { ...paramsObj, [paramName]: pageNum + 1 }
                 }}
               />
             </PaginationItem>

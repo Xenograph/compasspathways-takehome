@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import Spinner from "./icons/Spinner";
-import { Input } from "./ui/input";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useDebounce } from "use-debounce";
+import { useEffect, useState } from 'react';
+import Spinner from './icons/Spinner';
+import { Input } from './ui/input';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { useDebounce } from 'use-debounce';
 
 const DEBOUNCE_MS = 500;
-const SEARCH_PARAM = "search";
-const PAGE_PARAM = "page";
+const SEARCH_PARAM = 'search';
+const PAGE_PARAM = 'page';
 
 export default function SearchBox() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentFilter = searchParams.get(SEARCH_PARAM) ?? "";
+  const currentFilter = searchParams.get(SEARCH_PARAM) ?? '';
 
   const [searchFilter, setSearchFilter] = useState(currentFilter);
 

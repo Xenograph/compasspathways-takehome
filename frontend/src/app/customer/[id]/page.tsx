@@ -4,18 +4,18 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { getClient } from "@/lib/client";
-import { graphql } from "@/gql";
-import Link from "next/link";
-import CheckCircle from "@/components/icons/CheckCircle";
-import { XCircle } from "lucide-react";
-import Header from "@/components/Header";
+  TableRow
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { getClient } from '@/lib/client';
+import { graphql } from '@/gql';
+import Link from 'next/link';
+import CheckCircle from '@/components/icons/CheckCircle';
+import { XCircle } from 'lucide-react';
+import Header from '@/components/Header';
 
 export default async function CustomerPage({
-  params,
+  params
 }: {
   params: { id: string };
 }) {
@@ -42,7 +42,7 @@ export default async function CustomerPage({
         }
       }
     `),
-    variables: { id: params.id },
+    variables: { id: params.id }
   });
 
   if (!data.customer) {
@@ -61,8 +61,8 @@ export default async function CustomerPage({
             </div>
             <div>{data.customer.address}</div>
             <div>
-              <span className="font-semibold">Born:</span>{" "}
-              {data.customer.birthdate.split("T")[0]}
+              <span className="font-semibold">Born:</span>{' '}
+              {data.customer.birthdate.split('T')[0]}
             </div>
           </div>
           {!!data.customer.tierAndDetails.length && (
@@ -80,7 +80,7 @@ export default async function CustomerPage({
                   {data.customer.tierAndDetails.map((t) => (
                     <TableRow key={t.id}>
                       <TableCell className="font-medium">{t.tier}</TableCell>
-                      <TableCell>{t.benefits.join(", ")}</TableCell>
+                      <TableCell>{t.benefits.join(', ')}</TableCell>
                       <TableCell className="text-right">
                         {t.active ? <CheckCircle /> : <XCircle />}
                       </TableCell>
@@ -108,7 +108,7 @@ export default async function CustomerPage({
                   <TableRow key={a.accountId}>
                     <TableCell className="font-medium">{a.accountId}</TableCell>
                     <TableCell>{a.limit}</TableCell>
-                    <TableCell>{a.products.join(", ")}</TableCell>
+                    <TableCell>{a.products.join(', ')}</TableCell>
                     <TableCell className="text-right">
                       <Button variant="outline" asChild>
                         <Link href={`/account/${a.accountId}`}>

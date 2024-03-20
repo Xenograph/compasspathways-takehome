@@ -1,29 +1,29 @@
-import type { CodegenConfig } from "@graphql-codegen/cli";
+import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: "src/schema.ts",
+  schema: 'src/schema.ts',
   generates: {
-    "src/generated/graphql.ts": {
+    'src/generated/graphql.ts': {
       plugins: [
-        "typescript",
-        "typescript-resolvers",
-        "typescript-mongodb",
-        "typescript-document-nodes",
+        'typescript',
+        'typescript-resolvers',
+        'typescript-mongodb',
+        'typescript-document-nodes'
       ],
       config: {
-        contextType: "../types/ApolloContext.js#ApolloContext",
+        contextType: '../types/ApolloContext.js#ApolloContext',
         mappers: {
-          Customer: "../types/DbCustomer.js#DbCustomer",
-          Account: "../types/DbAccount.js#DbAccount",
-          Transaction: "../types/DbTransactionRecord.js#DbTransaction",
-        },
-      },
+          Customer: '../types/DbCustomer.js#DbCustomer',
+          Account: '../types/DbAccount.js#DbAccount',
+          Transaction: '../types/DbTransactionRecord.js#DbTransaction'
+        }
+      }
     },
-    "./graphql.schema.json": {
-      plugins: ["introspection"],
-    },
-  },
+    './graphql.schema.json': {
+      plugins: ['introspection']
+    }
+  }
 };
 
 export default config;

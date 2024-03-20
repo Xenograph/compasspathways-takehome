@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   scalar Date
@@ -35,10 +35,7 @@ export const typeDefs = gql`
     accountId: Int!
     limit: Int!
     products: [String!]!
-    transactions(
-      page: Int!
-      pageSize: Int!
-    ): TransactionPage!
+    transactions(page: Int!, pageSize: Int!): TransactionPage!
   }
 
   type CustomerPage {
