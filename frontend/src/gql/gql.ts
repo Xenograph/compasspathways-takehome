@@ -13,7 +13,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n      query ListCustomers($page: Int!, $pageSize: Int!) {\n        customers(page: $page, pageSize: $pageSize) {\n          items {\n            username\n            name\n            email\n          }\n          more\n        }\n      }\n    ": types.ListCustomersDocument,
+    "\n      query GetAccount($accountId: Int!, $page: Int!, $pageSize: Int!) {\n        account(accountId: $accountId) {\n          accountId\n          limit\n          products\n          transactions(page: $page, pageSize: $pageSize) {\n            items {\n              date\n              amount\n              transactionCode\n              symbol\n              price\n              total\n            }\n            more\n          }\n        }\n      }\n    ": types.GetAccountDocument,
+    "\n      query GetCustomer($id: ID!) {\n        customer(_id: $id) {\n          username\n          name\n          address\n          birthdate\n          email\n          accounts {\n            accountId\n            limit\n            products\n          }\n          tierAndDetails {\n            id\n            tier\n            benefits\n            active\n          }\n        }\n      }\n    ": types.GetCustomerDocument,
+    "\n      query ListCustomers($page: Int!, $pageSize: Int!) {\n        customers(page: $page, pageSize: $pageSize) {\n          items {\n            _id\n            username\n            name\n            email\n          }\n          more\n        }\n      }\n    ": types.ListCustomersDocument,
 };
 
 /**
@@ -33,7 +35,15 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n      query ListCustomers($page: Int!, $pageSize: Int!) {\n        customers(page: $page, pageSize: $pageSize) {\n          items {\n            username\n            name\n            email\n          }\n          more\n        }\n      }\n    "): (typeof documents)["\n      query ListCustomers($page: Int!, $pageSize: Int!) {\n        customers(page: $page, pageSize: $pageSize) {\n          items {\n            username\n            name\n            email\n          }\n          more\n        }\n      }\n    "];
+export function graphql(source: "\n      query GetAccount($accountId: Int!, $page: Int!, $pageSize: Int!) {\n        account(accountId: $accountId) {\n          accountId\n          limit\n          products\n          transactions(page: $page, pageSize: $pageSize) {\n            items {\n              date\n              amount\n              transactionCode\n              symbol\n              price\n              total\n            }\n            more\n          }\n        }\n      }\n    "): (typeof documents)["\n      query GetAccount($accountId: Int!, $page: Int!, $pageSize: Int!) {\n        account(accountId: $accountId) {\n          accountId\n          limit\n          products\n          transactions(page: $page, pageSize: $pageSize) {\n            items {\n              date\n              amount\n              transactionCode\n              symbol\n              price\n              total\n            }\n            more\n          }\n        }\n      }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      query GetCustomer($id: ID!) {\n        customer(_id: $id) {\n          username\n          name\n          address\n          birthdate\n          email\n          accounts {\n            accountId\n            limit\n            products\n          }\n          tierAndDetails {\n            id\n            tier\n            benefits\n            active\n          }\n        }\n      }\n    "): (typeof documents)["\n      query GetCustomer($id: ID!) {\n        customer(_id: $id) {\n          username\n          name\n          address\n          birthdate\n          email\n          accounts {\n            accountId\n            limit\n            products\n          }\n          tierAndDetails {\n            id\n            tier\n            benefits\n            active\n          }\n        }\n      }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      query ListCustomers($page: Int!, $pageSize: Int!) {\n        customers(page: $page, pageSize: $pageSize) {\n          items {\n            _id\n            username\n            name\n            email\n          }\n          more\n        }\n      }\n    "): (typeof documents)["\n      query ListCustomers($page: Int!, $pageSize: Int!) {\n        customers(page: $page, pageSize: $pageSize) {\n          items {\n            _id\n            username\n            name\n            email\n          }\n          more\n        }\n      }\n    "];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

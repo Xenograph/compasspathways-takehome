@@ -11,15 +11,22 @@ import { getClient } from "@/lib/client";
 import { graphql } from "@/gql";
 import Link from "next/link";
 import Paginator from "@/components/Paginator";
+import Header from "@/components/Header";
 
-export default async function Home({ searchParams }: { searchParams: any }) {
+const PAGE_SIZE = 15;
+
+export default async function Accounts({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const pageNum = Number(searchParams.page) || 1;
-
   const { data } = await getClient().query({
     query: graphql(`
       query ListCustomers($page: Int!, $pageSize: Int!) {
         customers(page: $page, pageSize: $pageSize) {
           items {
+            _id
             username
             name
             email
@@ -28,17 +35,13 @@ export default async function Home({ searchParams }: { searchParams: any }) {
         }
       }
     `),
-    variables: { page: pageNum, pageSize: 10 },
+    variables: { page: pageNum, pageSize: PAGE_SIZE },
   });
 
   return (
     <>
-      <header className="flex justify-between items-center shadow-md min-h-16 px-5">
-        <button>Go Back</button>
-        <h1>Customers</h1>
-        <button>Logout</button>
-      </header>
-      <main className="p-4">
+      <Header heading={`Customers`} />
+      <main className="p-4 m-4 rounded-lg border">
         <Table>
           <TableHeader>
             <TableRow>
@@ -50,21 +53,21 @@ export default async function Home({ searchParams }: { searchParams: any }) {
           </TableHeader>
           <TableBody>
             {data.customers.items.map((c) => (
-              <TableRow>
+              <TableRow key={c._id}>
                 <TableCell className="font-medium">{c.username}</TableCell>
                 <TableCell>{c.name}</TableCell>
                 <TableCell>{c.email}</TableCell>
                 <TableCell className="text-right">
                   <Button variant="outline" asChild>
-                    <Link href={`/customer/${c.username}`}>View</Link>
+                    <Link href={`/customer/${c._id}`}>View</Link>
                   </Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-        <Paginator more={data.customers.more} />
       </main>
+      <Paginator paramName="page" more={data.customers.more} />
     </>
   );
 }
