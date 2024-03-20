@@ -52,30 +52,34 @@ export default async function Accounts({
       <Header heading={`Customers`} />
       <main className="p-4 m-4 rounded-lg border">
         <SearchBox />
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Username</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead className="text-right"></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.customers.items.map((c) => (
-              <TableRow key={c._id}>
-                <TableCell className="font-medium">{c.username}</TableCell>
-                <TableCell>{c.name}</TableCell>
-                <TableCell>{c.email}</TableCell>
-                <TableCell className="text-right">
-                  <Button variant="outline" asChild>
-                    <Link href={`/customer/${c._id}`}>View</Link>
-                  </Button>
-                </TableCell>
+        {data.customers.items.length ? (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[100px]">Username</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead className="text-right"></TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {data.customers.items.map((c) => (
+                <TableRow key={c._id}>
+                  <TableCell className="font-medium">{c.username}</TableCell>
+                  <TableCell>{c.name}</TableCell>
+                  <TableCell>{c.email}</TableCell>
+                  <TableCell className="text-right">
+                    <Button variant="outline" asChild>
+                      <Link href={`/customer/${c._id}`}>View</Link>
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <p className="m-4 text-center font-semibold">No matching accounts found</p>
+        )}
       </main>
       <Paginator paramName="page" more={data.customers.more} />
     </>
